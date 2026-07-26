@@ -1,0 +1,496 @@
+aid: wahi
+name: Wahi
+reviewed: '2026-07-26'
+reviewer:
+  fn: Kin Lane
+  email: kin@apievangelist.com
+  url: https://apievangelist.com
+homeMarket: Canada
+tier: portal-marketplace
+status: built-stub
+statusReason: >-
+  Identity captured and every plausible developer surface probed. Wahi publishes no
+  developer portal, no API documentation, no SDK, no webhooks, no Postman workspace
+  and no machine-readable contract for any real estate capability. The single
+  publicly callable, self-describing API confirmed on any Wahi host is the stock
+  WordPress REST API of the marketing CMS, which is a content surface rather than a
+  real estate developer surface. Everything Wahi does with listing data it does as a
+  licensed brokerage consuming a licensed feed, not as a data provider.
+
+review:
+  question: >-
+    Does Wahi publish a public, documented API — and what is its RESO posture?
+  answer: false
+  date: '2026-07-26'
+  summary: >-
+    Wahi Inc. (trading as Wahi Realty Inc., Brokerage; also Wahi Ontario Inc.) is a
+    Toronto-headquartered Canadian digital real estate platform and licensed
+    brokerage founded in 2021 by CEO Benjy Katchen, with offices at #300-468 King St
+    W, Toronto and a second office in Montreal. Its products are a consumer home
+    search, an instant home valuation estimate ("What's My Home Worth?"), market data
+    (Market Pulse, House Price Index), the Wahi Select REALTOR matching brokerage
+    service, a cashback program, and a mortgage referral partnership with Nesto. It
+    covers Ontario, British Columbia, Alberta, Nova Scotia, Saskatchewan and New
+    Brunswick. Wahi is a data CONSUMER: press and vendor material identify Repliers
+    as its MLS connectivity and data-management API provider, and Wahi itself
+    publishes nothing programmatic. There is no developer program to sign up for, no
+    partner API page, and no data-licensing page.
+
+sectorPosture:
+  homeMarket: Canada
+
+  resoPosture:
+    shortPhrase: No RESO reference found — RESO is absent from the Canadian challenger layer.
+    verbatim: >-
+      No RESO reference of any kind exists on Wahi's public surfaces, and Wahi does
+      not appear in any RESO directory. Wahi holds no RESO Web API certification and
+      no RESO Data Dictionary certification at any version (1.7, 2.0 or otherwise).
+      It serves no OData service document, no $metadata CSDL document, and makes no
+      reference to the RESO Universal Property Identifier (UPI). Case-insensitive
+      searches for "RESO", "OData", "$metadata", "Data Dictionary", "UPI", "IDX",
+      "VOW" and "DDF" across every Wahi page fetched during this review — the
+      homepage (716,631 bytes), /ca/en/about-us/ (427,115 bytes),
+      /ca/en/terms-of-use/ (450,548 bytes) and /ca/en/find-a-realtor-in-your-area
+      (408,187 bytes) — produced zero genuine hits. Every apparent hit was a
+      substring false positive inside ordinary prose or minified JavaScript
+      ("resolve", "resonate", "resort" for RESO; base64 fragments and "addFilter" for
+      DDF and VOW). This is the honest and expected Canadian answer: RESO
+      certification is a US industry mandate imposed by NAR on Multiple Listing
+      Services, and Wahi is neither a US organization nor an MLS. It is a
+      CONSUMER of listing data as a licensed member brokerage, so the mandate does
+      not attach to it. This is a case where certification is ABSENT, not a case
+      where certification exists but is unreachable.
+    resoCertified: false
+    webApiCertified: false
+    dataDictionaryCertified: false
+    dataDictionaryVersion: null
+    odataEndpoint: null
+    metadataDocument: null
+    upiSupport: false
+    directoryEvidence:
+      - url: https://www.reso.org/certificates/
+        fetched: '2026-07-26'
+        status: 200
+        bytes: 416233
+        finding: >-
+          The full RESO certificates directory page was fetched and grepped
+          case-insensitively. Zero occurrences of "Wahi". For calibration the same
+          document returned zero occurrences of the other Canadian challengers
+          ("Zolo", "HouseSigma", "Properly") and zero for "Teranet", while returning
+          8 occurrences of "CREA", 2 of "Centris" and 2 of "Zillow" — confirming the
+          grep works and that Canadian representation in the directory is limited to
+          CREA and Quebec's Centris, not the challenger portals.
+      - url: https://www.reso.org/certification/
+        fetched: '2026-07-26'
+        status: 200
+        finding: >-
+          Confirms RESO currently certifies Web API Core 2.0.0, Data Dictionary 2.0
+          and RESO Common Format, and that the public directory of certified
+          organizations lives at https://www.reso.org/certificates/.
+      - url: https://www.reso.org/canadian-membership/
+        fetched: '2026-07-26'
+        status: 200
+        finding: >-
+          RESO's own Canadian member roster enumerates 19 organizations — Canadian
+          Real Estate Association, Centris, Clientime, Falcon Technologies
+          Corporation, Listed, Local Logic, Multi List Platform Limited Partnership,
+          Municipal Property Assessment Corporation (MPAC), Origin Confirmed Ltd,
+          Phoenix Software, Planitar, PropTexx, Prospects Software, REALTORS
+          Association of Edmonton, Real Estate Board of Greater Vancouver,
+          Saskatchewan REALTORS Association, Templates 4 Business, Victoria Real
+          Estate Board, Winnipeg Regional Real Estate Board. Wahi, Wahi Realty and
+          Wahi Inc are not among them.
+      - url: https://certification.reso.org/
+        fetched: '2026-07-26'
+        status: 400
+        finding: >-
+          RESO's live certification report host returned HTTP 400 to an anonymous
+          root request; sub-paths /organizations and /api/v1/organizations also
+          returned HTTP 400. The public certificates page was used instead.
+    upstreamSeamEvidence:
+      - url: https://ddfapi-docs.realtor.ca/
+        fetched: '2026-07-26'
+        status: 200
+        finding: >-
+          CREA's REALTOR.ca DDF Web API documentation is live and public. This is the
+          Canadian national seam, and it is CREA's, not Wahi's. It is recorded here
+          as context only and is deliberately NOT listed as a Wahi API.
+      - url: https://ddfapi.realtor.ca/odata/v1/$metadata
+        fetched: '2026-07-26'
+        status: 401
+        finding: >-
+          The DDF OData $metadata document — the machine-readable contract behind
+          Canada's national listing feed — exists and answers, but returns HTTP 401
+          Unauthorized to an anonymous request. This is the sector's central lesson in
+          one status code: the contract is real and the endpoint is reachable, but the
+          data behind it is licensed. It belongs to CREA, not to Wahi, and no Wahi
+          credential path to it is published.
+
+  accessGate: none-published
+  accessGateDetail: >-
+    There is nothing for a developer to sign or join, because Wahi offers nothing.
+    No developer portal, no API program page, no partner page, no data-licensing
+    page, no application form and no terms of API use exist. A developer cannot
+    self-serve, cannot apply, is not offered a partner path, and is not told to
+    become a member or licensee. The gate is therefore none-published rather than
+    membership-required or licence-agreement — those describe gates that exist and
+    have a door. What Wahi DOES publish is a prohibition: its Terms of Use at
+    https://wahi.com/ca/en/terms-of-use/ (HTTP 200) state "You will not use automated
+    means, including spiders, robots, crawlers, data mining tools, or the like to
+    download or scrape data from the Site" and "You will not access or use the Site
+    to collect any market research for competing businesses", and separately prohibit
+    "collecting, copying, displaying, posting, transferring, 'scrapping', 'data
+    mining', saving, storing, selling, manipulating, disseminating,
+    distributing/redistributing" MLS data, acknowledging that "CREA reproduces and
+    distributes this information as a service for its members" and that CREA and the
+    real estate boards retain proprietary rights. Beneath that prohibition, the data
+    itself is doubly gated: Wahi obtains it as a licensed Canadian brokerage with
+    CREA/board membership, and technically through the commercial MLS connectivity
+    APIs of its vendor Repliers. A third party wanting this data must become a member
+    brokerage, buy from a vendor like Repliers, or go to CREA's DDF — never to Wahi.
+    Wahi's robots.txt additionally disallows */graphql and
+    /ca/en/real-estate/graphql, closing the one internal machine route it has.
+  openData: false
+  openDataDetail: >-
+    No open, unlicensed, publicly callable Wahi dataset exists. Wahi's market data
+    products (Market Pulse, House Price Index) are published as HTML pages and blog
+    posts, not as downloadable or callable datasets, and they are derived from
+    board-licensed MLS data that the Terms of Use forbid redistributing. Canada has
+    no national counterpart to HM Land Registry Price Paid or Ordnance Survey open
+    data: provincial land registration is largely privatised — Teranet operates
+    Ontario's registry under long concession — so even the public record is a
+    commercial product in this market. The one exception in the national picture is
+    the Municipal Property Assessment Corporation (MPAC), which is a RESO Canadian
+    member, but that is assessment data belonging to MPAC and is unrelated to Wahi.
+  authModel: >-
+    No developer auth model is published. There is no API key programme, no OAuth 2.0
+    or OpenID Connect developer flow, and no SAML member portal offered to third
+    parties. https://wahi.com/.well-known/openid-configuration returned HTTP 403 and
+    https://wahi.com/.well-known/security.txt returned HTTP 403 — served by the edge
+    rather than by an identity provider, so no discovery document is available
+    anonymously. The consumer site uses ordinary first-party session sign-in, with a
+    Google One Tap social login wired to
+    https://wahi.com/api/login/google/onetap/callback (HTTP 200, text/html, 31,793
+    bytes) — an internal browser redirect route, not a documented API. The only
+    documented credential mechanism anywhere on a Wahi host is WordPress application
+    passwords, advertised in the wp-json discovery document with an authorization
+    endpoint at https://wahi.com/wp-admin/authorize-application.php; those are issued
+    only to authenticated CMS users through wp-admin and are not a public developer
+    path.
+  webhooksEventsSdksPostman: >-
+    None found, and the absence is uniform. No webhook or event documentation, no
+    AsyncAPI, no published SDK in any language, no CLI, no Postman workspace or
+    collection, and no changelog or status page for any API. There is no Wahi GitHub
+    organization: https://github.com/wahi resolves (HTTP 200) but is an unrelated
+    personal user account with no name, no company, no blog and zero public
+    repositories, and github.com/wahi-inc and github.com/wahicom both return HTTP
+    404. A LinkedIn company page at https://ca.linkedin.com/company/wahi-inc appeared
+    in search results but returned HTTP 404 on direct fetch, so it is not recorded in
+    apis.yml.
+  productApiFamily: >-
+    Faithfully stated, Wahi has product surfaces but no API family. Segmented as the
+    site itself segments them: (1) listings/search — map and filter-based home search
+    for sale and for rent across Ontario, British Columbia, Alberta, Nova Scotia,
+    Saskatchewan and New Brunswick; (2) valuation/AVM — the instant "What's My Home
+    Worth?" home estimate; (3) market data — Market Pulse, housing market reports and
+    the House Price Index; (4) agent matching/brokerage — Wahi Select, which pairs
+    consumers with vetted REALTORS under Wahi Realty Inc., Brokerage; (5) transaction
+    incentive — the Wahi Cashback Program; (6) mortgage — a referral partnership with
+    Nesto. None of these six is offered as a callable, documented API. The only API
+    Wahi actually exposes is the WordPress REST API behind (3)'s Learning Centre
+    content, which is CMS plumbing rather than a product.
+  coverage: >-
+    Ontario, British Columbia, Alberta, Nova Scotia, Saskatchewan and New Brunswick,
+    per wahi.com/ca/en. Wahi Select realtors are described as serving the Greater
+    Toronto Area, Ottawa, Kitchener-Waterloo, Hamilton, Niagara and Calgary.
+
+findings:
+  summary: |
+    Wahi is a closed platform with a real consumer product and no developer surface.
+    Every conventional developer entry point was probed on 2026-07-26. The
+    subdomains api., developer., developers., docs., app., gateway., api-gateway.,
+    graphql. and admin.wahi.com all fail DNS resolution entirely (dig returns no
+    answer), which is a stronger negative than the soft-200 SPA shells seen at some
+    peers. The path probes are genuine hard 404s serving an 85,913-byte HTML error
+    document: /developers, /developer, /ca/en/developers/, /api, /api/v1, /docs,
+    /openapi.json, /ca/en/openapi.json, /swagger.json, /api-docs, /$metadata, /odata
+    and /sitemap_index.xml. No OpenAPI, no Swagger, no OData $metadata, no AsyncAPI,
+    no GraphQL schema, no Postman collection and no SDK exists.
+
+    Two real machine surfaces were found and they must be read differently. The
+    first is an internal GraphQL endpoint: https://wahi.com/graphql returns HTTP 400
+    (a GraphQL server rejecting a query-less GET), and Wahi's own robots.txt
+    explicitly disallows "*/graphql" and "/ca/en/real-estate/graphql" to all user
+    agents. It is undocumented, robots-disallowed and carries no terms or key
+    issuance; it was NOT introspected and is deliberately NOT listed in apis.yml.
+    The second is the stock WordPress REST API at https://wahi.com/wp-json/, which
+    IS publicly callable anonymously — the root returns a 319,414-byte JSON
+    discovery document (14 namespaces, 223 routes) and /wp-json/wp/v2/posts returns
+    72KB of published Learning Centre content as JSON. That one is listed, with an
+    explicit description that it is CMS infrastructure and not a real estate API,
+    because it is the only public self-describing contract on the domain and
+    pretending otherwise would be dishonest in the other direction.
+
+    RESO is absent, which is the correct Canadian answer. The instructive contrast
+    is upstream: CREA's DDF OData endpoint at
+    https://ddfapi.realtor.ca/odata/v1/$metadata answers with HTTP 401. The national
+    contract is real, machine-readable, and locked — and Wahi reaches it as a member
+    brokerage and through a commercial vendor, never as something a developer can
+    sign up for.
+  developerPortal: none
+  developerPortalConfirmed: false
+  openapiHarvested: true
+  specsCount: 1
+  gated: true
+  gateType: none-published
+  apisListed: 1
+
+probes:
+  - url: https://wahi.com
+    status: 200
+    note: Redirects to https://wahi.com/ca/en. Live WordPress-backed marketing site plus a JS app for search.
+  - url: https://www.wahi.com
+    status: 200
+    note: Redirects to https://www.wahi.com/ca/en.
+  - url: https://wahi.com/robots.txt
+    status: 200
+    note: >-
+      Disallows */graphql, /ca/en/real-estate/graphql, */errors, */wp-content/plugins/,
+      */cms-components/assets/, */preliminary*, /s/ and a large set of letter- and
+      digit-prefixed listing routes. Declares sitemap
+      https://wahi.com/ca/en/real-estate/v2_sitemap.xml. Primary evidence that the
+      internal GraphQL endpoint is deliberately closed to crawlers.
+  - url: https://wahi.com/sitemap.xml
+    status: 200
+    note: Sitemap index pointing to https://wahi.com/ca/en/sitemap.xml. SEO crawl aid, not a dataset.
+  - url: https://api.wahi.com
+    status: 000
+    note: DNS does not resolve (dig returns no answer).
+  - url: https://developer.wahi.com
+    status: 000
+    note: DNS does not resolve.
+  - url: https://developers.wahi.com
+    status: 000
+    note: DNS does not resolve.
+  - url: https://docs.wahi.com
+    status: 000
+    note: DNS does not resolve.
+  - url: https://app.wahi.com
+    status: 000
+    note: DNS does not resolve.
+  - url: https://graphql.wahi.com
+    status: 000
+    note: DNS does not resolve.
+  - url: https://gateway.wahi.com
+    status: 000
+    note: DNS does not resolve.
+  - url: https://wahi.com/developers
+    status: 404
+    note: Hard 404 serving the 85,913-byte HTML error page. Not a soft-200 SPA shell.
+  - url: https://wahi.com/developer
+    status: 404
+    note: Hard 404.
+  - url: https://wahi.com/ca/en/developers/
+    status: 404
+    note: Hard 404.
+  - url: https://wahi.com/api
+    status: 404
+    note: Hard 404 at the bare path, though an internal /api/login/... namespace exists.
+  - url: https://wahi.com/api/v1
+    status: 404
+    note: Hard 404. No versioned API namespace is exposed.
+  - url: https://wahi.com/docs
+    status: 404
+    note: Hard 404.
+  - url: https://wahi.com/openapi.json
+    status: 404
+    note: Hard 404. No OpenAPI document.
+  - url: https://wahi.com/ca/en/openapi.json
+    status: 404
+    note: Hard 404.
+  - url: https://wahi.com/swagger.json
+    status: 404
+    note: Hard 404. No Swagger document.
+  - url: https://wahi.com/api-docs
+    status: 404
+    note: Hard 404.
+  - url: https://wahi.com/$metadata
+    status: 404
+    note: Hard 404. No OData CSDL metadata document; Wahi is not an OData service.
+  - url: https://wahi.com/odata
+    status: 404
+    note: Hard 404.
+  - url: https://wahi.com/.well-known/openid-configuration
+    status: 403
+    note: Forbidden at the edge. No OpenID Connect discovery document served anonymously.
+  - url: https://wahi.com/.well-known/security.txt
+    status: 403
+    note: Forbidden at the edge. No security.txt / vulnerability disclosure pointer.
+  - url: https://wahi.com/graphql
+    status: 400
+    note: >-
+      A GraphQL server responding to a query-less GET. Undocumented, and explicitly
+      disallowed to all crawlers by Wahi's own robots.txt. Not introspected, and
+      deliberately not listed in apis.yml.
+  - url: https://wahi.com/ca/en/real-estate/graphql
+    status: 404
+    note: The robots-disallowed locale-scoped GraphQL route returns 404 at its bare path.
+  - url: https://wahi.com/api/login/google/onetap/callback
+    status: 200
+    note: >-
+      Internal Google One Tap social-login redirect route (text/html, 31,793 bytes),
+      discovered in the homepage markup. First-party browser auth, not a developer API.
+  - url: https://wahi.com/api/login
+    status: 404
+    note: Hard 404. The /api/login namespace is not browsable.
+  - url: https://wahi.com/wp-json/
+    status: 200
+    note: >-
+      WordPress REST API discovery document. application/json, 319,414 bytes. Parses.
+      name "Wahi", url https://wahi.com, home https://wahi.com/ca/en, 14 namespaces
+      (oembed/1.0, contact-form-7/v1, custom-permalinks/v1, divi-pixel/v1,
+      wp-block-editor/v1, rankmath/v1 and three sub-namespaces, wp-smush/v1, divi/v1,
+      wp/v2, wp-site-health/v1), 223 routes, authentication.application-passwords
+      authorization endpoint https://wahi.com/wp-admin/authorize-application.php.
+      Harvested verbatim to openapi/wahi-wp-json-discovery.json.
+  - url: https://wahi.com/ca/en/wp-json/
+    status: 200
+    note: Same document served under the locale prefix.
+  - url: https://wahi.com/wp-json/wp/v2/posts?per_page=1
+    status: 200
+    note: >-
+      application/json, 72,369 bytes. Confirms the WordPress REST API is genuinely
+      callable anonymously and returns published Learning Centre content, not just a
+      discovery stub.
+  - url: https://wahi.com/ca/en/about-us/
+    status: 200
+    note: >-
+      427,115 bytes. HQ #300-468 King St W, Toronto ON M5V 1L8, plus a Montreal
+      office. Leadership: Benjy Katchen (CEO & Director), Yasha Sekhavat (VP Product
+      & Technology), Anne Alkok (Broker of Record), Leonie Tait (VP Marketing),
+      Jessie Zhang (VP Finance). Mentions MLS and CREA trademark attribution only.
+  - url: https://wahi.com/ca/en/terms-of-use/
+    status: 200
+    note: >-
+      450,548 bytes. Source of the anti-automation and anti-MLS-redistribution
+      clauses quoted in accessGateDetail. Identifies Wahi Inc. and Wahi Realty Inc.,
+      Brokerage.
+  - url: https://wahi.com/ca/en/privacy-policy/
+    status: 200
+    note: Live.
+  - url: https://wahi.com/ca/en/find-a-realtor-in-your-area
+    status: 200
+    note: Wahi Select realtor matching. 408,187 bytes.
+  - url: https://wahi.com/ca/en/market-pulse/
+    status: 200
+    note: Market data product, published as HTML. No dataset download or API.
+  - url: https://wahi.com/ca/en/learning-centre/
+    status: 200
+    note: WordPress-backed content hub. Recorded as Blog in apis.yml.
+  - url: https://wahi.com/ca/en/feed/
+    status: 200
+    note: >-
+      Valid RSS 2.0 feed, application/rss+xml, channel title "Wahi", link
+      https://wahi.com/ca/en. Recorded as BlogRSS in apis.yml.
+  - url: https://wahi.com/ca/en/blog/
+    status: 404
+    note: No /blog/ path; the content hub is /ca/en/learning-centre/.
+  - url: https://wahi.com/ca/en/partners/
+    status: 404
+    note: No partner or data-licensing page exists.
+  - url: https://wahi.com/ca/en/careers/
+    status: 404
+    note: Hard 404.
+  - url: https://github.com/wahi
+    status: 200
+    note: >-
+      Unrelated personal GitHub user account. type "User", no name, no company, no
+      blog, 0 public repositories. NOT Wahi the company; deliberately not recorded in
+      apis.yml.
+  - url: https://github.com/wahi-inc
+    status: 404
+    note: No Wahi GitHub organization under this handle.
+  - url: https://github.com/wahicom
+    status: 404
+    note: No Wahi GitHub organization under this handle.
+  - url: https://ca.linkedin.com/company/wahi-inc
+    status: 404
+    note: >-
+      Appeared in search results but returned 404 on direct fetch via two independent
+      clients. Not recorded in apis.yml rather than risk an unverified link.
+  - url: https://www.reso.org/certificates/
+    status: 200
+    note: 416,233 bytes. Zero occurrences of "Wahi".
+  - url: https://www.reso.org/canadian-membership/
+    status: 200
+    note: 19 Canadian member organizations listed; Wahi absent.
+  - url: https://certification.reso.org/
+    status: 400
+    note: No usable directory content anonymously.
+  - url: https://ddfapi-docs.realtor.ca/
+    status: 200
+    note: CREA's REALTOR.ca DDF Web API documentation — the upstream Canadian seam, not Wahi's.
+  - url: https://ddfapi.realtor.ca/odata/v1/$metadata
+    status: 401
+    note: >-
+      CREA DDF OData metadata exists but requires credentials. The sector's central
+      lesson in one status code.
+
+sources:
+  - url: https://wahi.com/ca/en
+    type: Website
+    note: Product surfaces, provincial coverage, CREA/MLS trademark attribution.
+  - url: https://wahi.com/ca/en/about-us/
+    type: About
+    note: HQ, offices, leadership, business model.
+  - url: https://wahi.com/ca/en/terms-of-use/
+    type: TermsOfService
+    note: Anti-automation and anti-MLS-redistribution clauses; legal entity names.
+  - url: https://wahi.com/robots.txt
+    type: Documentation
+    note: Evidence that the internal GraphQL endpoint is deliberately closed.
+  - url: https://wahi.com/wp-json/
+    type: OpenAPI
+    note: The one public self-describing contract on the domain; harvested verbatim.
+  - url: https://www.reso.org/certificates/
+    type: Documentation
+    note: RESO certificates directory; Wahi absent.
+  - url: https://www.reso.org/canadian-membership/
+    type: Documentation
+    note: RESO Canadian member roster; Wahi absent.
+  - url: https://repliers.com/wahi-empowering-home-buyers-sellers-with-innovation/
+    type: Documentation
+    note: >-
+      Vendor case study stating Wahi leverages Repliers' "Real Estate APIs for MLS
+      connectivity and data management", confirming Wahi is an API consumer. Makes no
+      mention of Wahi publishing an API of its own.
+  - url: https://ddfapi-docs.realtor.ca/
+    type: Documentation
+    note: CREA DDF Web API documentation — the upstream national seam.
+
+actions:
+  apisYmlCreated: true
+  apisListed: 1
+  openapiDirectoryCreated: true
+  specsHarvested:
+    - path: openapi/wahi-wp-json-discovery.json
+      sourceURL: https://wahi.com/wp-json/
+      fetched: '2026-07-26'
+      httpStatus: 200
+      bytes: 319414
+      contentType: application/json; charset=UTF-8
+      format: WordPress REST API discovery document (JSON)
+      parsed: true
+      parseNote: >-
+        Verified with python3 json.load — parses cleanly, 223 routes across 14
+        namespaces.
+  reason: >-
+    apis[] lists exactly one API. The internal GraphQL endpoint is excluded because
+    it is undocumented and explicitly robots-disallowed, and listing it would
+    misrepresent a private implementation detail as a developer product. The
+    WordPress REST API is included because it is genuinely public, anonymously
+    callable and self-describing, and omitting the only real machine-readable
+    contract on the domain would be equally dishonest — but its description states
+    plainly that it is CMS infrastructure with no real estate capability. No
+    OpenAPI, Swagger, OData $metadata, AsyncAPI, Postman collection or SDK exists for
+    any Wahi real estate capability.

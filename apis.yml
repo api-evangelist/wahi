@@ -1,0 +1,87 @@
+aid: wahi
+url: https://raw.githubusercontent.com/api-evangelist/wahi/refs/heads/main/apis.yml
+name: Wahi
+kind: company
+description: >-
+  Wahi is a Toronto-headquartered Canadian digital real estate platform and
+  licensed brokerage — Wahi Inc., trading as Wahi Realty Inc., Brokerage — founded
+  in 2021 by Benjy Katchen. It runs a consumer home search, an instant home
+  valuation estimate, market data products (Market Pulse, House Price Index), a
+  Wahi Select REALTOR matching service and a cashback program across Ontario,
+  British Columbia, Alberta, Nova Scotia, Saskatchewan and New Brunswick. Wahi
+  sits in the challenger layer of the Canadian listings value chain and does not
+  own the data it surfaces: Canadian residential listings run through CREA, the
+  single national cooperative that operates REALTOR.ca and the Data Distribution
+  Facility (DDF), and Wahi reaches that data as a member brokerage and through a
+  commercial MLS connectivity vendor (Repliers) rather than by operating a feed of
+  its own. Its real estate API posture is none-published. Probing on 2026-07-26
+  found no developer portal, no api./developer./developers./docs. subdomain (all
+  fail DNS resolution), no OpenAPI or Swagger document, and no RESO Web API
+  certification, RESO Data Dictionary certification, OData service or $metadata
+  document anywhere on its hosts; Wahi does not appear in the RESO certificates
+  directory nor on RESO's Canadian membership roster. The Terms of Use expressly
+  forbid automated access, crawling and scraping, and forbid collecting, copying,
+  storing or redistributing MLS data. The single publicly callable, self-describing
+  API found on any Wahi host is the stock WordPress REST API of its marketing CMS —
+  a content surface, not a real estate developer surface. Wahi is an API consumer,
+  not an API producer.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/groq.png
+tags:
+- Real Estate
+- Canada
+- Property Listings
+- MLS
+- Valuation
+- AVM
+- PropTech
+- Rentals
+- Brokerage
+created: '2026-07-26'
+modified: '2026-07-26'
+specificationVersion: '0.19'
+apis:
+- aid: wahi:wahi-wordpress-rest-api
+  name: Wahi WordPress REST API
+  description: >-
+    The stock WordPress REST API served by Wahi's marketing and Learning Centre
+    CMS at https://wahi.com/wp-json/. It is publicly reachable and self-describing:
+    an anonymous GET on the root returns a 319KB JSON discovery document declaring
+    14 namespaces and 223 routes (wp/v2 content routes plus oembed/1.0,
+    contact-form-7/v1, rankmath/v1, divi/v1, divi-pixel/v1, custom-permalinks/v1,
+    wp-block-editor/v1, wp-smush/v1 and wp-site-health/v1 plugin routes), and an
+    anonymous GET on /wp-json/wp/v2/posts returns published Learning Centre content
+    as JSON. This is CMS infrastructure that Wahi neither documents nor offers as a
+    product — it carries no Wahi developer documentation, no key issuance, no terms
+    of API use and no real estate listing, valuation or transaction capability. It
+    is recorded here because it is the only genuinely public, machine-readable API
+    surface confirmed on a Wahi host. Write operations advertise WordPress
+    application passwords, which are issued only through wp-admin to authenticated
+    CMS users.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://wahi.com/wp-json
+  tags:
+  - WordPress
+  - Content
+  - CMS
+  - REST
+  properties:
+  - type: OpenAPI
+    url: openapi/wahi-wp-json-discovery.json
+  - type: Documentation
+    url: https://developer.wordpress.org/rest-api/
+common:
+- type: Website
+  url: https://wahi.com/ca/en
+- type: About
+  url: https://wahi.com/ca/en/about-us/
+- type: TermsOfService
+  url: https://wahi.com/ca/en/terms-of-use/
+- type: PrivacyPolicy
+  url: https://wahi.com/ca/en/privacy-policy/
+- type: Blog
+  url: https://wahi.com/ca/en/learning-centre/
+- type: BlogRSS
+  url: https://wahi.com/ca/en/feed/
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
