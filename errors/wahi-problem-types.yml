@@ -1,0 +1,78 @@
+generated: '2026-07-26'
+method: derived
+source: >-
+  openapi/wahi-listing-search-openapi.yaml (documented responses) plus live responses observed
+  from https://api.prod.wahi.com and https://wahi.com/wp-json on 2026-07-26
+format: proprietary
+rfc9457: false
+note: >-
+  Wahi publishes no error reference. The Listing Search OpenAPI documents exactly one response —
+  HTTP 200 — and declares no 4xx or 5xx at all, so there is nothing to derive from the spec's
+  error surface. The entries below are the error envelopes actually observed on Wahi's live hosts,
+  each with the probe that produced it. None uses application/problem+json.
+problems:
+- status: 404
+  surface: rest
+  envelope: '{"message": "Not Found"}'
+  content_type: application/json
+  title: Not Found
+  detail: >-
+    Returned by api.prod.wahi.com for every probed path, including the /gpt/search path declared
+    as the server in Wahi's own published OpenAPI. The gateway answers with a bare `message`
+    field and no code, no type URI and no trace identifier.
+  observed:
+  - url: https://api.prod.wahi.com/gpt/search?first=1
+    date: '2026-07-26'
+  - url: https://api.prod.wahi.com/
+    date: '2026-07-26'
+  source_operation: openapi/wahi-listing-search-openapi.yaml#searchListings
+- status: 400
+  surface: graphql
+  code: INVALID_GRAPHQL_REQUEST
+  envelope: '{"errors":[{"message":"Invalid GraphQL request","extensions":{"details":"...","code":"INVALID_GRAPHQL_REQUEST"}}]}'
+  title: Invalid GraphQL request
+  detail: >-
+    Apollo-style GraphQL error envelope. extensions.details reads "There was no GraphQL operation
+    to execute. Use the `query` parameter to send an operation, using either GET or POST."
+  observed:
+  - url: https://api.prod.wahi.com/graphql
+    date: '2026-07-26'
+- status: 200
+  surface: graphql
+  code: INTROSPECTION_DISABLED
+  envelope: '{"errors":[{"message":"introspection has been disabled","extensions":{"code":"INTROSPECTION_DISABLED"}}]}'
+  title: Introspection disabled
+  detail: >-
+    The GraphQL server is live but refuses schema introspection. Recorded as an error semantic,
+    not as evidence of a schema — no SDL was harvested and none is invented.
+  observed:
+  - url: https://api.prod.wahi.com/graphql
+    date: '2026-07-26'
+- status: 403
+  surface: edge
+  envelope: application/xml AccessDenied (111 bytes)
+  title: Edge access denied
+  detail: >-
+    Returned by wahi.com for every /.well-known/ path other than ai-plugin.json. An object-store
+    style XML denial from the CDN edge, not an application error.
+  observed:
+  - url: https://wahi.com/.well-known/security.txt
+    date: '2026-07-26'
+- status: 404
+  surface: website
+  envelope: text/html error document (85,913 bytes)
+  title: Not found (HTML)
+  detail: >-
+    wahi.com serves a hard HTML 404 for developer paths (/developers, /api, /openapi.json,
+    /docs, /odata, /$metadata). A genuine 404, not a soft-200 SPA shell.
+  observed:
+  - url: https://wahi.com/openapi.json
+    date: '2026-07-26'
+wordpress_errors:
+  note: >-
+    The WordPress REST API on wahi.com uses the WordPress core error envelope,
+    {"code":"rest_...","message":"...","data":{"status":<int>}} — e.g. rest_no_route (404),
+    rest_forbidden (401/403), rest_invalid_param (400). These are WordPress core semantics
+    inherited by Wahi's CMS, not codes Wahi defines or documents.
+  envelope: '{"code":"<string>","message":"<string>","data":{"status":<int>}}'
+  documented_by: https://developer.wordpress.org/rest-api/using-the-rest-api/

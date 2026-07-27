@@ -1,0 +1,70 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Wahi Listing Search API
+  version: 1.0.0
+x-apievangelist:
+  generated: '2026-07-26'
+  method: generated
+  source: openapi/wahi-listing-search-openapi.yaml
+  note: >-
+    Our enhancements only. The harvested spec at openapi/wahi-listing-search-openapi.yaml is
+    Wahi's verbatim document and is never mutated. Every value asserted below was observed by
+    probe on 2026-07-26 or read from Wahi's own published surfaces.
+extends: openapi/wahi-listing-search-openapi.yaml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: wahi
+    x-apievangelist-discovered-via: https://wahi.com/.well-known/ai-plugin.json
+    x-apievangelist-spec-url: https://wahi.com/gpt/openapi.yaml
+    x-apievangelist-spec-status: 200
+    x-apievangelist-harvested: '2026-07-26'
+    x-apievangelist-data-provenance: >-
+      Listings originate with Canadian real estate boards and CREA (REALTOR.ca / the Data
+      Distribution Facility). Wahi reaches them as a licensed member brokerage and through the
+      commercial MLS connectivity vendor Repliers. Wahi is a consumer of this data, not its owner.
+    x-apievangelist-terms: https://wahi.com/ca/en/terms-of-use/
+    x-apievangelist-terms-note: >-
+      Wahi's Terms of Use forbid automated access, crawling and scraping of the site, and forbid
+      collecting, copying, storing or redistributing MLS data. No developer key programme, no API
+      terms of use and no partner path are published.
+- target: $.servers[0]
+  update:
+    x-apievangelist-probe:
+      url: https://api.prod.wahi.com/gpt/search
+      date: '2026-07-26'
+      status: 404
+      body: '{"message":"Not Found"}'
+      finding: >-
+        The declared server path is dark. The OpenAPI and the ai-plugin manifest that advertises
+        it are both still served, but the endpoint behind them returns 404. Treat this contract as
+        a published-but-unserved ChatGPT-plugin-era artifact until Wahi says otherwise.
+- target: $.paths['/search'].get
+  update:
+    x-agentic-access:
+      action-class: connected
+      consequence: read
+      subject: optional
+      token:
+        max-ttl: 3600
+      audit: none
+    x-apievangelist-tags:
+    - listings
+    - search
+    - real-estate
+    x-apievangelist-auth: none
+    x-apievangelist-note: >-
+      Anonymous read. Wahi's own AI plugin manifest declares auth.type "none" and
+      is_user_authenticated false; the spec declares no securitySchemes.
+- target: $.paths['/search'].get.responses
+  update:
+    x-apievangelist-undocumented-responses: >-
+      Only a 200 is declared. No 4xx or 5xx responses are documented. Observed error envelopes are
+      catalogued in errors/wahi-problem-types.yml.
+- target: $.components.schemas.Listing
+  update:
+    x-apievangelist-identifier: mlsId
+    x-apievangelist-standards-note: >-
+      Field names are Wahi's consumer projection, not RESO Data Dictionary names (mlsId vs
+      ListingKey, listPrice vs ListPrice, sqft vs LivingArea). Wahi holds no RESO Web API or Data
+      Dictionary certification. See conformance/wahi-conformance.yml.

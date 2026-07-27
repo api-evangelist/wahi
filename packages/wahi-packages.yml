@@ -1,0 +1,56 @@
+generated: '2026-07-26'
+method: searched
+source: >-
+  npm registry search (registry.npmjs.org), PyPI, RubyGems, and the GitHub organization
+  github.com/wahi-com, probed 2026-07-26.
+summary: >-
+  Wahi publishes no client SDK for any of its own APIs in any language. The one first-party
+  package on any public registry is an internal server-side infrastructure library —
+  @wahi/apollo-plugins, Apollo Server plugins for Nest.js, authored by "Wahi Inc" and sourced
+  from github.com/wahi-com/apollo-plugins. It is a building block of Wahi's own GraphQL stack
+  (which matches the live Apollo server observed at https://api.prod.wahi.com/graphql), not a
+  consumer-facing client for the Listing Search API. It is recorded here as a genuine
+  first-party package; no `SDKs` pointer is emitted in apis.yml because Wahi ships no API
+  client library.
+packages:
+- language: typescript
+  registry: npm
+  name: "@wahi/apollo-plugins"
+  version: 2.0.2
+  published: '2025-01-29'
+  url: https://www.npmjs.com/package/@wahi/apollo-plugins
+  repository: https://github.com/wahi-com/apollo-plugins
+  install: npm install @wahi/apollo-plugins
+  license: MIT
+  author: Wahi Inc
+  official: true
+  client_sdk: false
+  description: >-
+    Apollo Server plugins for Nest.js (monitoring/Datadog). Internal infrastructure for Wahi's
+    own GraphQL API, not a client library for a Wahi public API.
+registries_probed:
+- registry: npm
+  query: wahi
+  result: >-
+    2 matches. "wahi" (v1.0.1, 2018, "my first npm publication demo", publisher ebonet) is
+    unrelated. "@wahi/apollo-plugins" is first-party. No @wahi-scoped client SDK exists.
+- registry: pypi
+  query: wahi
+  result: 404 Not Found — no PyPI project named wahi.
+- registry: rubygems
+  query: wahi
+  result: No first-party gem; search returns unrelated projects.
+- registry: github
+  query: github.com/wahi-com
+  result: >-
+    Organization confirmed (login wahi-com, name "Wahi", blog wahi.com, location Canada,
+    created 2022). Two public repositories: apollo-plugins (TypeScript, first-party) and
+    terraform-provider-aws (a Go fork of the HashiCorp AWS provider, last pushed 2024-01-30).
+    No SDK, no CLI, no OpenAPI, no examples repository.
+mobile_apps:
+- platform: ios
+  url: https://apps.apple.com/ca/app/wahi-real-estate-canada/id1622880103
+  note: Consumer app linked from Wahi's own llms.txt. Not a developer package.
+- platform: android
+  url: https://play.google.com/store/apps/details?id=com.wahi.app&hl=en
+  note: Consumer app linked from Wahi's own llms.txt. Not a developer package.

@@ -1,0 +1,80 @@
+generated: '2026-07-26'
+method: derived
+source: >-
+  openapi/wahi-listing-search-openapi.yaml, well-known/wahi-ai-plugin.json, llms/wahi-llms.txt,
+  review.yml (RESO directory evidence), and live probes — 2026-07-26
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: >-
+    https://wahi.com/gpt/openapi.yaml is a valid OpenAPI 3.0.1 document (parses; info, servers,
+    one path, four component schemas). Harvested to openapi/wahi-listing-search-openapi.yaml.
+- id: openapi-ai-plugin-manifest
+  conforms: true
+  evidence: >-
+    https://wahi.com/.well-known/ai-plugin.json is a schema_version v1 AI plugin manifest with
+    api.type "openapi" and auth.type "none".
+- id: llms-txt
+  conforms: true
+  evidence: >-
+    https://wahi.com/llms.txt returns 421,554 bytes of well-formed llms.txt — H1, prose sections,
+    and annotated link lists for listings, market data, guides and authors. Last-Updated 2025-07-20.
+- id: graphql
+  conforms: true
+  partial: true
+  evidence: >-
+    https://api.prod.wahi.com/graphql is a live Apollo-style GraphQL server (INVALID_GRAPHQL_REQUEST
+    on a query-less GET) but introspection is disabled (INTROSPECTION_DISABLED) and the endpoint is
+    undocumented and robots-disallowed. No schema is published.
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 securityScheme in any spec; /.well-known/oauth-authorization-server is 403.
+- id: openid-connect
+  conforms: false
+  evidence: /.well-known/openid-configuration returns HTTP 403 from the edge; no discovery document.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Error bodies are proprietary ({"message":"..."} on REST, Apollo errors[] on GraphQL). No
+    application/problem+json anywhere. See errors/wahi-problem-types.yml.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns HTTP 403 (edge deny); no RFC 9116 file is served.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: >-
+    No Sunset or Deprecation headers. The /gpt endpoint named in the published spec is already
+    dark (404) with no deprecation signal of any kind.
+- id: rfc9727-api-catalog
+  conforms: false
+  evidence: /.well-known/api-catalog returns HTTP 403.
+- id: asyncapi
+  conforms: false
+  evidence: No event, streaming or webhook surface exists. Not applicable to this provider.
+- id: reso-web-api
+  conforms: false
+  evidence: >-
+    No RESO Web API certification, no OData service document, no $metadata CSDL, no UPI support.
+    Wahi does not appear in https://www.reso.org/certificates/ nor on RESO's Canadian membership
+    roster (both fetched 2026-07-26; see review.yml sectorPosture.resoPosture). Wahi is a licensed
+    member brokerage consuming CREA/board data, not an MLS, so the RESO mandate does not attach.
+- id: reso-data-dictionary
+  conforms: false
+  evidence: Same directory evidence; no Data Dictionary certification at 1.7, 2.0 or any version.
+- id: odata
+  conforms: false
+  evidence: https://wahi.com/$metadata and /odata are hard 404s. Wahi serves no OData.
+compliance_programme:
+  published: false
+  certifications: []
+  trust_center: null
+  detail: >-
+    No trust centre, no security or compliance page, no named certification (SOC 2, ISO 27001,
+    PCI DSS, HIPAA) is published on any Wahi surface — probe-security-programs.py returned
+    vdp=none trust=none on 2026-07-26. No `Compliance` pointer is emitted.
+regulatory_context:
+  note: >-
+    Wahi's binding obligations are real-estate regulatory rather than API-standards based: it
+    operates as Wahi Realty Inc., Brokerage under provincial real estate regulation (RECO in
+    Ontario) and consumes MLS data under CREA/board licence terms, which its Terms of Use pass
+    through as a prohibition on scraping, storing and redistributing listing data.

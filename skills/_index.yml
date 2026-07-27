@@ -1,0 +1,15 @@
+generated: '2026-07-26'
+method: generated
+source: openapi/wahi-listing-search-openapi.yaml
+note: >-
+  Wahi publishes no AGENTS.md and no provider-authored agent skills; probed 2026-07-26. The single
+  skill below is generated from the one real operation in Wahi's published OpenAPI, and carries the
+  liveness caveat that the declared server currently returns 404.
+skills:
+- file: wahi-search-listings.md
+  name: Search Canadian property listings on Wahi
+  description: >-
+    Find for-sale, for-rent and sold residential listings across Wahi's Canadian coverage, with
+    the mandatory liveness probe and the terms-of-use limits an agent must respect.
+  api: openapi/wahi-listing-search-openapi.yaml
+  operations: [searchListings]

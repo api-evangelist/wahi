@@ -1,0 +1,64 @@
+generated: '2026-07-26'
+method: searched
+source: >-
+  https://wahi.com/.well-known/ai-plugin.json, openapi/wahi-listing-search-openapi.yaml,
+  openapi/wahi-wp-json-discovery.json, and live probes of https://api.prod.wahi.com — 2026-07-26
+docs: null
+summary:
+  types: [none, http-basic, cookie]
+  api_key_in: []
+  oauth2_flows: []
+  developer_credential_programme: false
+  note: >-
+    Wahi issues no developer credential of any kind. There is no API key programme, no OAuth 2.0
+    or OpenID Connect developer flow, and no partner credential path. The Listing Search API that
+    Wahi publishes an OpenAPI for declares NO securitySchemes at all, and Wahi's own AI plugin
+    manifest states auth.type "none" with is_user_authenticated false — it was designed as an
+    anonymous read surface for a ChatGPT plugin. The only credential mechanism documented
+    anywhere on a Wahi host is WordPress application passwords on the marketing CMS, issued
+    through wp-admin to authenticated CMS users, which is not a public developer path.
+schemes:
+- name: none
+  type: none
+  api: openapi/wahi-listing-search-openapi.yaml
+  applies_to: [searchListings]
+  evidence: >-
+    The published OpenAPI 3.0.1 contains no components.securitySchemes and no security[]
+    requirement on /search. https://wahi.com/.well-known/ai-plugin.json declares
+    "auth": {"type": "none"} and "is_user_authenticated": false.
+- name: application-passwords
+  type: http
+  scheme: basic
+  api: openapi/wahi-wp-json-discovery.json
+  authorization_endpoint: https://wahi.com/wp-admin/authorize-application.php
+  public: false
+  evidence: >-
+    The wp-json discovery document declares
+    authentication.application-passwords.endpoints.authorization. WordPress application passwords
+    are HTTP Basic credentials minted per user inside wp-admin; anonymous reads on
+    /wp-json/wp/v2/* need no credential, writes need one.
+- name: wordpress-cookie-nonce
+  type: cookie
+  api: openapi/wahi-wp-json-discovery.json
+  public: false
+  evidence: >-
+    Standard WordPress REST behaviour for same-origin browser requests (cookie plus X-WP-Nonce).
+    Not documented by Wahi; inherent to the WordPress core REST API it runs.
+consumer_sign_in:
+  note: >-
+    Consumer sign-in on wahi.com is first-party session auth with a Google One Tap social login
+    wired to https://wahi.com/api/login/google/onetap/callback (HTTP 200, text/html). It is an
+    internal browser redirect route, not a documented API. https://wahi.com/ca/en/login redirects
+    to https://wahi.com/wp-login.php — the CMS admin login, not a consumer or developer sign-up.
+graphql:
+  endpoint: https://api.prod.wahi.com/graphql
+  documented: false
+  introspection: disabled
+  evidence: >-
+    POST of the introspection query returns
+    {"errors":[{"message":"introspection has been disabled","extensions":{"code":"INTROSPECTION_DISABLED"}}]}.
+    A GET without a query returns INVALID_GRAPHQL_REQUEST. The endpoint is live but undocumented,
+    carries no published auth model, and wahi.com/robots.txt disallows */graphql. No schema was
+    harvested and none is fabricated here.
+oauth: null
+scopes: null

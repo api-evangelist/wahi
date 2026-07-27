@@ -1,0 +1,91 @@
+generated: '2026-07-26'
+method: derived
+source: openapi/wahi-listing-search-openapi.yaml
+note: >-
+  Derived mechanically from the four component schemas in Wahi's published Listing Search
+  OpenAPI. This is Wahi's own public projection of an MLS listing — a flattened, consumer-shaped
+  view, not a RESO Data Dictionary resource. Field names are Wahi's (mlsId, listPrice, sqft,
+  geoZoneSeoPath), not RESO's (ListingKey, ListPrice, LivingArea).
+entities:
+- name: ListingsResponse
+  role: envelope
+  description: The response object containing an array of property listings.
+  fields:
+  - name: listings
+    type: array<Listing>
+- name: Listing
+  role: root
+  description: A single property listing with its details.
+  identifier:
+    field: mlsId
+    type: string
+    description: The unique identifier for the property listing in the MLS board.
+    note: >-
+      The identifier is the board's MLS number, which makes the upstream ownership of the data
+      explicit in the contract itself — Wahi mints no identifier of its own.
+  fields:
+  - {name: mlsId, type: string}
+  - {name: listPrice, type: number/float, unit: CAD}
+  - {name: soldPrice, type: number/float, unit: CAD}
+  - {name: annualTaxAmount, type: number/float, unit: CAD}
+  - {name: listDate, type: string/date-time}
+  - {name: soldDate, type: string/date-time}
+  - {name: type, type: enum, values: [Sale, Rent]}
+  - {name: detailsPropertyType, type: string}
+  - {name: numBedrooms, type: number}
+  - {name: numBedroomsFull, type: number}
+  - {name: numBedroomsPlus, type: number}
+  - {name: numBathrooms, type: number}
+  - {name: numBathroomsFull, type: number}
+  - {name: numBathroomsPlus, type: number}
+  - {name: numParkingSpaces, type: number}
+  - {name: sqft, type: string, note: 'Displayed as a unique value (X), a range (X-X) or a comparative (<X).'}
+  - {name: highestRatedSchool, type: number/float, note: Fraser Institute school rating of the nearest highest-rated school.}
+  - {name: geoZoneSeoPath, type: string, note: Breadcrumb hierarchy from province/state down to neighbourhood.}
+  - {name: url, type: string, note: Link back to the wahi.com listing page.}
+  - {name: coverImage, type: string}
+  - {name: address, type: Address}
+  - {name: coordinates, type: Coordinates}
+- name: Address
+  role: value-object
+  description: Detailed address information for a property listing.
+  fields: [area, city, country, district, majorIntersection, neighborhood, streetDirection,
+    streetName, streetNumber, streetSuffix, unitNumber, zip, state]
+- name: Coordinates
+  role: value-object
+  description: Latitude and longitude coordinates of a location.
+  fields: [latitude, longitude]
+relationships:
+- from: ListingsResponse
+  to: Listing
+  kind: has_many
+  via: listings
+  evidence: '$ref #/components/schemas/Listing inside listings[]'
+- from: Listing
+  to: Address
+  kind: has_one
+  via: address
+  evidence: '$ref #/components/schemas/Address'
+- from: Listing
+  to: Coordinates
+  kind: has_one
+  via: coordinates
+  evidence: '$ref #/components/schemas/Coordinates'
+operations:
+- operationId: searchListings
+  returns: ListingsResponse
+  path: /search
+  method: get
+absent_entities:
+  note: >-
+    Wahi's product surface is much wider than its contract. Agents, offices, open houses, sold
+    history, valuations (the "What's My Home Worth?" estimate), Market Pulse / House Price Index
+    market data, saved searches and cashback all exist as consumer features but appear in no
+    published schema. Nothing is modelled for them here.
+secondary_surface:
+  name: WordPress REST API
+  source: openapi/wahi-wp-json-discovery.json
+  note: >-
+    The marketing CMS exposes the stock WordPress content model (posts, pages, media, categories,
+    tags, users, comments, taxonomies, blocks) across 14 namespaces and 223 routes. It is
+    WordPress core's data model, not Wahi's, and is deliberately not expanded here.

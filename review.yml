@@ -494,3 +494,77 @@ actions:
     plainly that it is CMS infrastructure with no real estate capability. No
     OpenAPI, Swagger, OData $metadata, AsyncAPI, Postman collection or SDK exists for
     any Wahi real estate capability.
+
+enrichmentRounds:
+  - date: '2026-07-26'
+    round: 2
+    method: enrichment pipeline (search / generate / derive)
+    correction: >-
+      This round overturns the round-one conclusion that no OpenAPI exists for any Wahi real
+      estate capability. The round-one probe set was portal-shaped — subdomains, /developers,
+      /openapi.json, /swagger.json, /api-docs — and every one of those genuinely 404s or fails
+      DNS. What it did not probe was the agent-facing discovery surface. Wahi serves
+      https://wahi.com/.well-known/ai-plugin.json (HTTP 200, 666 bytes), an OpenAI-style AI plugin
+      manifest whose api.url points at https://wahi.com/gpt/openapi.yaml — and that URL returns a
+      real, parsing OpenAPI 3.0.1 document (HTTP 200, 12,574 bytes) titled "Listing Search API",
+      declaring one operation (searchListings, GET /search) with 30 typed query parameters and
+      four component schemas, requiring no authentication. Wahi also serves
+      https://wahi.com/llms.txt (HTTP 200, 421,554 bytes, Last-Updated 2025-07-20), a genuine
+      llms.txt. The corrected posture is that Wahi authors exactly one real estate API contract,
+      published for AI agents rather than for developers, and never linked from any human
+      developer page.
+    caveat: >-
+      The contract is published but unserved. https://api.prod.wahi.com/gpt/search returned HTTP
+      404 {"message":"Not Found"} on 2026-07-26, as did every other path on that host except
+      /graphql. This is a ChatGPT-plugin-era surface (ai-plugin.json plus a /gpt prefix) left
+      published after its endpoint went dark, with no Sunset header, deprecation notice or
+      changelog. Recorded in lifecycle/wahi-lifecycle.yml.
+    alsoCorrected:
+      - >-
+        GitHub organization EXISTS: https://github.com/wahi-com (login wahi-com, name "Wahi", blog
+        wahi.com, location Canada), found via the npm package @wahi/apollo-plugins whose repository
+        field points at it. Round one checked github.com/wahi, wahi-inc and wahicom and concluded
+        there was none. Two public repos: apollo-plugins (TypeScript, first-party, MIT, author
+        "Wahi Inc", last push 2025-01-29) and a fork of terraform-provider-aws.
+      - >-
+        First-party npm package EXISTS: @wahi/apollo-plugins v2.0.2 — Apollo Server plugins for
+        Nest.js. Internal GraphQL infrastructure, not a client SDK, so no SDKs pointer is emitted.
+      - >-
+        The live GraphQL server is on the API host, not the website host:
+        https://api.prod.wahi.com/graphql answers with an Apollo error envelope. Introspection is
+        explicitly disabled (INTROSPECTION_DISABLED), so no schema was harvested and none is
+        fabricated. It remains excluded from apis.yml as undocumented and robots-disallowed.
+      - >-
+        The openapi/wahi-wp-json-discovery.json pointer was retyped from OpenAPI to Discovery. It
+        is a WordPress REST API discovery document, not an OpenAPI, and typing it as OpenAPI
+        mislabelled the contract. The OpenAPI pointer now points at the real spec.
+      - >-
+        The apis.yml image was a mis-templated Groq icon; replaced with Wahi's own logo,
+        https://wahi.com/wp-content/uploads/2022/10/wahi-logo.svg, the logo_url its plugin manifest
+        publishes.
+    stillTrue:
+      - No developer portal, no API documentation, no getting-started page, no pricing page and no
+        developer sign-up exist. The Listing Search API is documented nowhere in human-readable form.
+      - No status page (status.wahi.com does not resolve), no changelog, no SLA, no deprecation policy.
+      - No security.txt, no vulnerability disclosure programme, no trust centre, no named
+        certification. probe-security-programs.py returned vdp=none trust=none.
+      - No RESO Web API or Data Dictionary certification, no OData, no $metadata, no UPI.
+      - No MCP server, no webhooks, no AsyncAPI, no CLI, no Postman workspace, no sandbox, no client SDK.
+    artifactsAdded:
+      - openapi/wahi-listing-search-openapi.yaml
+      - well-known/wahi-ai-plugin.json
+      - well-known/wahi-well-known.yml
+      - llms/wahi-llms.txt
+      - packages/wahi-packages.yml
+      - authentication/wahi-authentication.yml
+      - conventions/wahi-conventions.yml
+      - errors/wahi-problem-types.yml
+      - lifecycle/wahi-lifecycle.yml
+      - conformance/wahi-conformance.yml
+      - data-model/wahi-data-model.yml
+      - overlays/wahi-listing-search-overlay.yaml
+      - skills/wahi-search-listings.md
+      - skills/_index.yml
+      - mcp/wahi-mcp.yml
+      - agentic-access/wahi-agentic-access.yml
+      - security/wahi-domain-security.yml

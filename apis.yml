@@ -14,18 +14,25 @@ description: >-
   single national cooperative that operates REALTOR.ca and the Data Distribution
   Facility (DDF), and Wahi reaches that data as a member brokerage and through a
   commercial MLS connectivity vendor (Repliers) rather than by operating a feed of
-  its own. Its real estate API posture is none-published. Probing on 2026-07-26
-  found no developer portal, no api./developer./developers./docs. subdomain (all
-  fail DNS resolution), no OpenAPI or Swagger document, and no RESO Web API
-  certification, RESO Data Dictionary certification, OData service or $metadata
-  document anywhere on its hosts; Wahi does not appear in the RESO certificates
-  directory nor on RESO's Canadian membership roster. The Terms of Use expressly
-  forbid automated access, crawling and scraping, and forbid collecting, copying,
-  storing or redistributing MLS data. The single publicly callable, self-describing
-  API found on any Wahi host is the stock WordPress REST API of its marketing CMS —
-  a content surface, not a real estate developer surface. Wahi is an API consumer,
-  not an API producer.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/groq.png
+  its own. Wahi runs no developer programme: there is no developer portal, no
+  api./developer./developers./docs. subdomain (all fail DNS resolution), no API key
+  or OAuth credential path, and no RESO Web API certification, RESO Data Dictionary
+  certification, OData service or $metadata document anywhere on its hosts — Wahi
+  appears in neither the RESO certificates directory nor RESO's Canadian membership
+  roster. The Terms of Use expressly forbid automated access, crawling and scraping,
+  and forbid collecting, copying, storing or redistributing MLS data. It does,
+  however, publish two agent-facing artifacts that a portal-shaped search misses: a
+  421KB llms.txt at https://wahi.com/llms.txt (Last-Updated 2025-07-20) and an
+  OpenAI-style AI plugin manifest at /.well-known/ai-plugin.json that points to a
+  genuine OpenAPI 3.0.1 "Listing Search API" at https://wahi.com/gpt/openapi.yaml —
+  one anonymous searchListings operation with 30 typed filters over Canadian
+  listings. The spec is still served; the server it names, api.prod.wahi.com/gpt,
+  returns 404, so the contract is published but unserved. A live Apollo GraphQL
+  endpoint exists at api.prod.wahi.com/graphql with introspection disabled and
+  robots.txt disallowing it, and the stock WordPress REST API of the marketing CMS
+  remains anonymously callable. Wahi is overwhelmingly an API consumer rather than a
+  producer, but not a zero.
+image: https://wahi.com/wp-content/uploads/2022/10/wahi-logo.svg
 tags:
 - Real Estate
 - Canada
@@ -65,11 +72,73 @@ apis:
   - CMS
   - REST
   properties:
-  - type: OpenAPI
+  - type: Discovery
     url: openapi/wahi-wp-json-discovery.json
   - type: Documentation
     url: https://developer.wordpress.org/rest-api/
+- aid: wahi:wahi-listing-search-api
+  name: Wahi Listing Search API
+  description: >-
+    Wahi's own real estate API, and the only machine-readable contract it authors. Discovered
+    through https://wahi.com/.well-known/ai-plugin.json, an OpenAI-style AI plugin manifest that
+    points at https://wahi.com/gpt/openapi.yaml — a genuine OpenAPI 3.0.1 document (HTTP 200,
+    12,574 bytes on 2026-07-26) titled "Listing Search API". It declares one operation,
+    searchListings (GET /search), with 30 typed query parameters covering geography (lat/long plus
+    a distance radius in metres, or a free-text search string), price in CAD, bedrooms, bathrooms,
+    property type, sale versus rent, square footage, lot dimensions, parking, amenities (garage,
+    fireplace, air conditioning, pets) and Fraser Institute school ratings, plus an `active` flag
+    that switches the result set between active and sold listings. It returns a ListingsResponse
+    of Listing objects keyed on the board's mlsId. It requires no authentication: the spec declares
+    no securitySchemes and the manifest declares auth type "none". Two caveats are material. First,
+    the declared server https://api.prod.wahi.com/gpt is currently dark — /gpt/search returned HTTP
+    404 {"message":"Not Found"} when probed on 2026-07-26 — so this is a published-but-unserved
+    ChatGPT-plugin-era contract, retired with no Sunset header, deprecation notice or changelog.
+    Second, the data is licensed: listings originate with CREA and the Canadian real estate boards
+    and Wahi's Terms of Use forbid storing or redistributing them.
+  humanURL: https://wahi.com/ca/en
+  baseURL: https://api.prod.wahi.com/gpt
+  tags:
+  - Real Estate
+  - Property Listings
+  - Search
+  - MLS
+  - Canada
+  properties:
+  - type: OpenAPI
+    url: openapi/wahi-listing-search-openapi.yaml
+  - type: Overlay
+    url: overlays/wahi-listing-search-overlay.yaml
+  - type: DataModel
+    url: data-model/wahi-data-model.yml
+  - type: AgentSkill
+    url: skills/wahi-search-listings.md
 common:
+- type: DomainSecurity
+  url: security/wahi-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/wahi-agentic-access.yml
+- type: LLMsTxt
+  url: llms/wahi-llms.txt
+- type: WellKnown
+  url: well-known/wahi-well-known.yml
+- type: Authentication
+  url: authentication/wahi-authentication.yml
+- type: Conventions
+  url: conventions/wahi-conventions.yml
+- type: ErrorCatalog
+  url: errors/wahi-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/wahi-lifecycle.yml
+- type: Conformance
+  url: conformance/wahi-conformance.yml
+- type: Packages
+  url: packages/wahi-packages.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: GitHubOrganization
+  url: https://github.com/wahi-com
+- type: Support
+  url: https://wahi.com/ca/en/contact-us/
 - type: Website
   url: https://wahi.com/ca/en
 - type: About

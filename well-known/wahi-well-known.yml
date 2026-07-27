@@ -1,0 +1,64 @@
+generated: '2026-07-26'
+method: searched
+source: live probes of https://wahi.com/.well-known/* and https://api.prod.wahi.com/.well-known/*
+note: >-
+  Wahi serves exactly one machine-readable discovery document under /.well-known/ — an
+  OpenAI-style AI plugin manifest (ai-plugin.json). It is the artifact that leads to Wahi's
+  only real estate OpenAPI: the manifest points at https://wahi.com/gpt/openapi.yaml, which is
+  live and returns a genuine OpenAPI 3.0.1 document (harvested to
+  openapi/wahi-listing-search-openapi.yaml). Every other /.well-known/ path on wahi.com returns
+  HTTP 403 from the edge (an 111-byte application/xml AccessDenied body), which is a blanket
+  edge deny rather than an identity provider answering. On the API host, api.prod.wahi.com, the
+  same paths return a JSON 404 ({"message":"Not Found"}).
+hosts:
+- host: https://wahi.com
+  documents:
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    content_type: application/json
+    bytes: 666
+    file: wahi-ai-plugin.json
+    note: >-
+      AI plugin manifest. schema_version v1, name_for_model "wahi", auth type "none",
+      api.type "openapi" at https://wahi.com/gpt/openapi.yaml, contact_email support@wahi.com,
+      legal_info_url https://wahi.com/ca/en/terms-of-use/.
+  - path: /.well-known/security.txt
+    status: 403
+    note: Edge AccessDenied (application/xml, 111 bytes). No RFC 9116 file served.
+  - path: /.well-known/openid-configuration
+    status: 403
+    note: Edge AccessDenied. No OIDC discovery document.
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    note: Edge AccessDenied. No RFC 8414 metadata.
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+    note: Edge AccessDenied. No RFC 9728 metadata.
+  - path: /.well-known/api-catalog
+    status: 403
+    note: Edge AccessDenied. No RFC 9727 API catalog.
+  - path: /.well-known/mcp.json
+    status: 403
+    note: Edge AccessDenied. No MCP server manifest.
+- host: https://api.prod.wahi.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    note: 'JSON 404: {"message":"Not Found"}.'
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/apollo-federation
+    status: 404
+related:
+- path: /llms.txt
+  host: https://wahi.com
+  status: 200
+  bytes: 421554
+  file: ../llms/wahi-llms.txt
+  note: Real provider-published llms.txt (not under /.well-known/), Last-Updated 2025-07-20.
+- path: /gpt/openapi.yaml
+  host: https://wahi.com
+  status: 200
+  bytes: 12574
+  file: ../openapi/wahi-listing-search-openapi.yaml
+  note: The OpenAPI the ai-plugin manifest points at. Harvested verbatim.

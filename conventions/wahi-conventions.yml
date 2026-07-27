@@ -1,0 +1,114 @@
+generated: '2026-07-26'
+method: derived
+source: >-
+  openapi/wahi-listing-search-openapi.yaml, openapi/wahi-wp-json-discovery.json, and live probes
+  of https://api.prod.wahi.com and https://wahi.com/wp-json — 2026-07-26
+note: >-
+  Wahi publishes no developer documentation, so there is no authored conventions page to harvest.
+  Everything below is derived from the two machine-readable contracts that do exist and from
+  observed responses. Absences are recorded as absences, not filled in.
+authentication:
+  style: none
+  detail: >-
+    The Listing Search API declares no securitySchemes and the AI plugin manifest declares
+    auth.type "none". See authentication/wahi-authentication.yml.
+idempotency:
+  supported: false
+  header: null
+  detail: >-
+    No idempotency key, no request-deduplication contract, and no write operations at all — the
+    published API surface is a single GET. No `Idempotency` pointer is emitted for this provider.
+pagination:
+  style: window
+  params:
+  - name: first
+    in: query
+    type: integer
+    description: Retrieve the first X items in the result set.
+  - name: last
+    in: query
+    type: integer
+    description: Retrieve the last X items in the result set.
+  response_fields:
+  - listings
+  cursors: false
+  total_count: false
+  link_header: false
+  detail: >-
+    /search takes `first` and `last` window parameters. The declared ListingsResponse carries only
+    a `listings` array — no total, no page metadata, no next/prev cursor, no Link header. There is
+    no documented default or maximum page size.
+sorting:
+  params:
+  - name: sortBy
+    values: [relevance, date, distance, listDate, listPrice, price, soldDate, updatedOn]
+    default: relevance
+  - name: sortOrder
+    values: [asc, desc]
+    default: desc
+filtering:
+  style: flat-query-parameters
+  count: 30
+  families:
+  - name: geography
+    params: [coordinatesLatitude, coordinatesLongitude, distance, searchString]
+  - name: price
+    params: [minPrice, maxPrice]
+  - name: rooms
+    params: [minBeds, maxBeds, minBaths, maxBaths]
+  - name: property
+    params: [propertyTypes, listingType, minSquareFt, maxSquareFt, minLotDepth, maxLotDepth, minLotWidth, maxLotWidth, minParkings]
+  - name: amenities
+    params: [garage, fireplace, airConditioning, allowPets]
+  - name: status
+    params: [active, newlyAdded, highestRatedSchools]
+  detail: >-
+    Filters are flat, typed query parameters with enums declared in-spec (propertyTypes,
+    listingType). `active` defaults to true; setting it false returns sold listings only. Distance
+    is in metres, prices in CAD, lot dimensions in metres.
+field_expansion:
+  supported: false
+metadata:
+  supported: false
+request_tracing:
+  request_id_header: null
+  observed: >-
+    No X-Request-Id or correlation header was observed on any api.prod.wahi.com response.
+versioning:
+  scheme: none-in-path
+  current: 1.0.0
+  detail: >-
+    info.version is 1.0.0 in the published OpenAPI. The server URL
+    https://api.prod.wahi.com/gpt carries a product prefix rather than a version segment; there is
+    no /v1, no version header, and no published versioning policy.
+error_envelope:
+  rfc9457: false
+  shapes:
+  - surface: rest
+    shape: '{"message": "<text>"}'
+    evidence: 'Observed HTTP 404 body {"message":"Not Found"} on api.prod.wahi.com paths, 2026-07-26.'
+  - surface: graphql
+    shape: '{"errors":[{"message":"...","extensions":{"code":"..."}}]}'
+    evidence: 'Observed on https://api.prod.wahi.com/graphql, 2026-07-26.'
+  - surface: wordpress
+    shape: '{"code":"rest_...","message":"...","data":{"status":<int>}}'
+    evidence: WordPress core REST API error envelope on https://wahi.com/wp-json.
+  detail: >-
+    The published OpenAPI declares only a 200 response for searchListings — no 4xx or 5xx
+    responses are documented. See errors/wahi-problem-types.yml.
+rate_limiting:
+  documented: false
+  headers_observed: []
+  detail: >-
+    No rate-limit documentation and no RateLimit/X-RateLimit headers observed. The binding
+    constraint is contractual rather than technical: Wahi's Terms of Use forbid automated access,
+    crawling and scraping, and forbid storing or redistributing MLS data.
+content_types:
+  request: []
+  response: [application/json]
+cross_links:
+  authentication: authentication/wahi-authentication.yml
+  errors: errors/wahi-problem-types.yml
+  lifecycle: lifecycle/wahi-lifecycle.yml
+  data_model: data-model/wahi-data-model.yml
+  terms: https://wahi.com/ca/en/terms-of-use/

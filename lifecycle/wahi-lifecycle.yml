@@ -1,0 +1,64 @@
+generated: '2026-07-26'
+method: derived
+source: >-
+  openapi/wahi-listing-search-openapi.yaml, https://wahi.com/.well-known/ai-plugin.json,
+  https://wahi.com/llms.txt, and live probes — 2026-07-26
+versioning:
+  scheme: none
+  current: 1.0.0
+  docs: null
+  detail: >-
+    info.version 1.0.0 in the published OpenAPI. No version segment in the server URL
+    (https://api.prod.wahi.com/gpt), no version header, no published versioning policy.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  deprecated_operations: []
+  observed_retirement:
+    surface: Listing Search API
+    detail: >-
+      The single most important lifecycle fact about this API is undocumented and only visible by
+      probing. Wahi still publishes the OpenAPI at https://wahi.com/gpt/openapi.yaml (HTTP 200,
+      12,574 bytes, 2026-07-26) and still advertises it from
+      https://wahi.com/.well-known/ai-plugin.json, but the server it names —
+      https://api.prod.wahi.com/gpt — returns HTTP 404 {"message":"Not Found"} for /gpt/search and
+      for every other probed path. The contract is live; the endpoint behind it is not. This is a
+      ChatGPT-plugin-era surface (the ai-plugin.json + /gpt convention) left published after the
+      plugin ecosystem was retired, with no Sunset header, no deprecation notice and no changelog
+      entry to say so.
+    probed: '2026-07-26'
+    spec_status: 200
+    endpoint_status: 404
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  detail: >-
+    No status page. status.wahi.com does not resolve in DNS and https://wahi.com/status returns
+    the HTML 404. No `StatusPage` pointer is emitted.
+changelog:
+  url: null
+  detail: >-
+    No API changelog, release notes or version history is published. The only dated freshness
+    signal on any Wahi machine surface is the trailer of https://wahi.com/llms.txt, which reads
+    "Last-Updated: 2025-07-20".
+support:
+  contact: support@wahi.com
+  source: https://wahi.com/.well-known/ai-plugin.json
+  page: https://wahi.com/ca/en/contact-us/
+maintenance_signals:
+- signal: llms.txt Last-Updated
+  value: '2025-07-20'
+  source: https://wahi.com/llms.txt
+- signal: first-party npm package @wahi/apollo-plugins last publish
+  value: '2025-01-29'
+  source: https://www.npmjs.com/package/@wahi/apollo-plugins
+- signal: github.com/wahi-com/apollo-plugins last push
+  value: '2025-01-29'
+  source: https://github.com/wahi-com/apollo-plugins
+- signal: TLS certificate for api.prod.wahi.com
+  value: expires Dec 5 2026
+  source: security/wahi-domain-security.yml
