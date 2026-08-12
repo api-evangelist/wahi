@@ -113,6 +113,8 @@ apis:
   - type: AgentSkill
     url: skills/wahi-search-listings.md
 common:
+- type: MCPServer
+  url: mcp/wahi-mcp.yml
 - type: DomainSecurity
   url: security/wahi-domain-security.yml
 - type: AgenticAccess
