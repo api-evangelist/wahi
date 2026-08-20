@@ -34,6 +34,16 @@ description: >-
   producer, but not a zero.
 image: https://wahi.com/wp-content/uploads/2022/10/wahi-logo.svg
 tags:
+- Real-Estate
+- Canada
+- Property Listings
+- MLS
+- Valuation
+- AVM
+- PropTech
+- Rentals
+- Brokerage
+tags_raw:
 - Real Estate
 - Canada
 - Property Listings
@@ -98,6 +108,12 @@ apis:
   humanURL: https://wahi.com/ca/en
   baseURL: https://api.prod.wahi.com/gpt
   tags:
+  - Real-Estate
+  - Property Listings
+  - Search
+  - MLS
+  - Canada
+  tags_raw:
   - Real Estate
   - Property Listings
   - Search
