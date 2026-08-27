@@ -60,20 +60,16 @@ apis:
 - aid: wahi:wahi-wordpress-rest-api
   name: Wahi WordPress REST API
   description: >-
-    The stock WordPress REST API served by Wahi's marketing and Learning Centre
-    CMS at https://wahi.com/wp-json/. It is publicly reachable and self-describing:
-    an anonymous GET on the root returns a 319KB JSON discovery document declaring
-    14 namespaces and 223 routes (wp/v2 content routes plus oembed/1.0,
-    contact-form-7/v1, rankmath/v1, divi/v1, divi-pixel/v1, custom-permalinks/v1,
-    wp-block-editor/v1, wp-smush/v1 and wp-site-health/v1 plugin routes), and an
-    anonymous GET on /wp-json/wp/v2/posts returns published Learning Centre content
-    as JSON. This is CMS infrastructure that Wahi neither documents nor offers as a
-    product — it carries no Wahi developer documentation, no key issuance, no terms
-    of API use and no real estate listing, valuation or transaction capability. It
-    is recorded here because it is the only genuinely public, machine-readable API
-    surface confirmed on a Wahi host. Write operations advertise WordPress
-    application passwords, which are issued only through wp-admin to authenticated
-    CMS users.
+    The stock WordPress REST API served by Wahi's marketing and Learning Centre CMS at https://wahi.com/wp-json/.
+    It is publicly reachable and self-describing: an anonymous GET on the root returns a 319KB JSON discovery
+    document declaring 14 namespaces and 223 routes (wp/v2 content routes plus oembed/1.0, contact-form-7/v1,
+    rankmath/v1, divi/v1, divi-pixel/v1, custom-permalinks/v1, wp-block-editor/v1, wp-smush/v1 and wp-site-health/v1
+    plugin routes), and an anonymous GET on /wp-json/wp/v2/posts returns published Learning Centre content
+    as JSON. This is CMS infrastructure that Wahi neither documents nor offers as a product — it carries
+    no Wahi developer documentation, no key issuance, no terms of API use and no real estate listing,
+    valuation or transaction capability. It is recorded here because it is the only genuinely public,
+    machine-readable API surface confirmed on a Wahi host. Write operations advertise WordPress application
+    passwords, which are issued only through wp-admin to authenticated CMS users.
   humanURL: https://developer.wordpress.org/rest-api/
   baseURL: https://wahi.com/wp-json
   tags:
@@ -86,49 +82,23 @@ apis:
     url: openapi/wahi-wp-json-discovery.json
   - type: Documentation
     url: https://developer.wordpress.org/rest-api/
-- aid: wahi:wahi-listing-search-api
-  name: Wahi Listing Search API
-  description: >-
-    Wahi's own real estate API, and the only machine-readable contract it authors. Discovered
-    through https://wahi.com/.well-known/ai-plugin.json, an OpenAI-style AI plugin manifest that
-    points at https://wahi.com/gpt/openapi.yaml — a genuine OpenAPI 3.0.1 document (HTTP 200,
-    12,574 bytes on 2026-07-26) titled "Listing Search API". It declares one operation,
-    searchListings (GET /search), with 30 typed query parameters covering geography (lat/long plus
-    a distance radius in metres, or a free-text search string), price in CAD, bedrooms, bathrooms,
-    property type, sale versus rent, square footage, lot dimensions, parking, amenities (garage,
-    fireplace, air conditioning, pets) and Fraser Institute school ratings, plus an `active` flag
-    that switches the result set between active and sold listings. It returns a ListingsResponse
-    of Listing objects keyed on the board's mlsId. It requires no authentication: the spec declares
-    no securitySchemes and the manifest declares auth type "none". Two caveats are material. First,
-    the declared server https://api.prod.wahi.com/gpt is currently dark — /gpt/search returned HTTP
-    404 {"message":"Not Found"} when probed on 2026-07-26 — so this is a published-but-unserved
-    ChatGPT-plugin-era contract, retired with no Sunset header, deprecation notice or changelog.
-    Second, the data is licensed: listings originate with CREA and the Canadian real estate boards
-    and Wahi's Terms of Use forbid storing or redistributing them.
-  humanURL: https://wahi.com/ca/en
-  baseURL: https://api.prod.wahi.com/gpt
+- aid: wahi:wahi-search-api
+  name: Wahi Search API
+  description: The Search API from Wahi — 1 operation(s) for search.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://wahi.com/wp-json
   tags:
-  - Real-Estate
-  - Property Listings
   - Search
-  - MLS
-  - Canada
-  tags_raw:
-  - Real Estate
-  - Property Listings
-  - Search
-  - MLS
-  - Canada
   properties:
   - type: OpenAPI
-    url: openapi/wahi-listing-search-openapi.yaml
-  - type: Overlay
-    url: overlays/wahi-listing-search-overlay.yaml
+    url: openapi/wahi-search-api-openapi.yml
   - type: DataModel
     url: data-model/wahi-data-model.yml
-  - type: AgentSkill
-    url: skills/wahi-search-listings.md
 common:
+- type: Overlay
+  url: overlays/wahi-listing-search-overlay.yaml
+- type: AgentSkill
+  url: skills/wahi-search-listings.md
 - type: MCPServer
   url: mcp/wahi-mcp.yml
 - type: DomainSecurity
