@@ -32,6 +32,18 @@ description: >-
   robots.txt disallowing it, and the stock WordPress REST API of the marketing CMS
   remains anonymously callable. Wahi is overwhelmingly an API consumer rather than a
   producer, but not a zero.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://wahi.com/wp-content/uploads/2022/10/wahi-logo.svg
 tags:
 - Real-Estate
