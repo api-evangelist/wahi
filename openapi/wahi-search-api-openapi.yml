@@ -11,7 +11,7 @@ paths:
   /search:
     get:
       operationId: searchListings
-      summary: Search for property listings, including flats, houses, condos, and apartments for sale, rent, or lease.
+      summary: Search for property listings, including flats, houses, condos, and apartments…
       parameters:
       - in: query
         name: first

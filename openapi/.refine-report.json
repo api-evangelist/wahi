@@ -1,0 +1,22 @@
+{
+  "provider": "wahi",
+  "sources": [
+    "_original/wahi-listing-search-openapi.yaml"
+  ],
+  "outputs": [
+    "wahi-search-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "wahi-listing-search-openapi.yaml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "wahi-listing-search-openapi.yaml: tagged paths GET /search -> Search",
+    "wahi-listing-search-openapi.yaml: declared missing tag: Search",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "wahi-search-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
