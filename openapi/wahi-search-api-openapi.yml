@@ -239,6 +239,70 @@ paths:
       - Search
 components:
   schemas:
+    Coordinates:
+      type: object
+      description: Latitude and longitude coordinates of a location.
+      properties:
+        latitude:
+          type: number
+          format: float
+        longitude:
+          type: number
+          format: float
+    Address:
+      type: object
+      description: Detailed address information for a property listing.
+      properties:
+        area:
+          type: string
+          description: The area where the property is located.
+        city:
+          type: string
+          description: The city where the property is located.
+        country:
+          type: string
+          description: The country where the property is located.
+        district:
+          type: string
+          description: The district where the property is located.
+        majorIntersection:
+          type: string
+          description: The nearest major intersection to the property.
+        neighborhood:
+          type: string
+          description: The neighborhood where the property is located.
+        streetDirection:
+          type: string
+          description: The direction the street is facing.
+        streetName:
+          type: string
+          description: The name of the street where the property is located.
+        streetNumber:
+          type: string
+          description: The street number of the property.
+        streetSuffix:
+          type: string
+          description: The suffix for the street name (e.g., "Avenue" or "Street").
+        unitNumber:
+          type: string
+          description: The unit number of the property, if applicable.
+        zip:
+          type: string
+          description: The postal code of the property.
+        state:
+          type: string
+          description: The state or province where the property is located.
+    ListingsResponse:
+      title: ListingsResponse
+      type: object
+      description: The response object containing an array of property listings.
+      properties:
+        listings:
+          title: Listings
+          description: An array of property listings.
+          type: array
+          items:
+            $ref: '#/components/schemas/Listing'
     Listing:
       type: object
       description: A single property listing with its details.
@@ -323,67 +387,3 @@ components:
         sqft:
           type: string
           description: The square footage of the property, displayed as a unique value (X), range (X-X), or comparative value (<X).
-    ListingsResponse:
-      title: ListingsResponse
-      type: object
-      description: The response object containing an array of property listings.
-      properties:
-        listings:
-          title: Listings
-          description: An array of property listings.
-          type: array
-          items:
-            $ref: '#/components/schemas/Listing'
-    Coordinates:
-      type: object
-      description: Latitude and longitude coordinates of a location.
-      properties:
-        latitude:
-          type: number
-          format: float
-        longitude:
-          type: number
-          format: float
-    Address:
-      type: object
-      description: Detailed address information for a property listing.
-      properties:
-        area:
-          type: string
-          description: The area where the property is located.
-        city:
-          type: string
-          description: The city where the property is located.
-        country:
-          type: string
-          description: The country where the property is located.
-        district:
-          type: string
-          description: The district where the property is located.
-        majorIntersection:
-          type: string
-          description: The nearest major intersection to the property.
-        neighborhood:
-          type: string
-          description: The neighborhood where the property is located.
-        streetDirection:
-          type: string
-          description: The direction the street is facing.
-        streetName:
-          type: string
-          description: The name of the street where the property is located.
-        streetNumber:
-          type: string
-          description: The street number of the property.
-        streetSuffix:
-          type: string
-          description: The suffix for the street name (e.g., "Avenue" or "Street").
-        unitNumber:
-          type: string
-          description: The unit number of the property, if applicable.
-        zip:
-          type: string
-          description: The postal code of the property.
-        state:
-          type: string
-          description: The state or province where the property is located.

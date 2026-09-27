@@ -59,7 +59,7 @@ accessModel:
   method: derived
 image: https://wahi.com/wp-content/uploads/2022/10/wahi-logo.svg
 tags:
-- Real-Estate
+- Real Estate
 - Canada
 - Property Listings
 - MLS
@@ -78,40 +78,29 @@ tags_raw:
 - PropTech
 - Rentals
 - Brokerage
+- Real-Estate
 created: '2026-07-26'
 modified: '2026-07-26'
 specificationVersion: '0.23'
 apis:
-- aid: wahi:wahi-wordpress-rest-api
-  name: Wahi WordPress REST API
-  description: >-
-    The stock WordPress REST API served by Wahi's marketing and Learning Centre CMS at https://wahi.com/wp-json/.
-    It is publicly reachable and self-describing: an anonymous GET on the root returns a 319KB JSON discovery
-    document declaring 14 namespaces and 223 routes (wp/v2 content routes plus oembed/1.0, contact-form-7/v1,
-    rankmath/v1, divi/v1, divi-pixel/v1, custom-permalinks/v1, wp-block-editor/v1, wp-smush/v1 and wp-site-health/v1
-    plugin routes), and an anonymous GET on /wp-json/wp/v2/posts returns published Learning Centre content
-    as JSON. This is CMS infrastructure that Wahi neither documents nor offers as a product — it carries
-    no Wahi developer documentation, no key issuance, no terms of API use and no real estate listing,
-    valuation or transaction capability. It is recorded here because it is the only genuinely public,
-    machine-readable API surface confirmed on a Wahi host. Write operations advertise WordPress application
-    passwords, which are issued only through wp-admin to authenticated CMS users.
-  humanURL: https://developer.wordpress.org/rest-api/
+- aid: wahi:wahi-com-website-wordpress-rest
+  name: Wahi Website (WordPress REST)
+  description: 'The public WordPress REST API (wp-json) of the Wahi website at wahi.com: the route index
+    of the site''s content management system, catalogued as one site surface rather than as separate APIs.'
   baseURL: https://wahi.com/wp-json
   tags:
   - WordPress
-  - Content
-  - CMS
-  - REST
+  x-surface: platform-generated
   properties:
-  - type: Discovery
-    url: openapi/wahi-wp-json-discovery.json
   - type: Documentation
-    url: https://developer.wordpress.org/rest-api/
+    url: https://wahi.com/wp-json
+  x-platform: wordpress
+  x-platform-surface: rest
 - aid: wahi:wahi-search-api
   name: Wahi Search API
   description: The Search API from Wahi — 1 operation(s) for search.
   humanURL: https://developer.wordpress.org/rest-api/
-  baseURL: https://wahi.com/wp-json
+  baseURL: https://api.prod.wahi.com/gpt
   tags:
   - Search
   properties:
