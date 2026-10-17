@@ -239,6 +239,17 @@ paths:
       - Search
 components:
   schemas:
+    ListingsResponse:
+      title: ListingsResponse
+      type: object
+      description: The response object containing an array of property listings.
+      properties:
+        listings:
+          title: Listings
+          description: An array of property listings.
+          type: array
+          items:
+            $ref: '#/components/schemas/Listing'
     Address:
       type: object
       description: Detailed address information for a property listing.
@@ -376,14 +387,3 @@ components:
         sqft:
           type: string
           description: The square footage of the property, displayed as a unique value (X), range (X-X), or comparative value (<X).
-    ListingsResponse:
-      title: ListingsResponse
-      type: object
-      description: The response object containing an array of property listings.
-      properties:
-        listings:
-          title: Listings
-          description: An array of property listings.
-          type: array
-          items:
-            $ref: '#/components/schemas/Listing'
