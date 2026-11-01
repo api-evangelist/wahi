@@ -1,4 +1,4 @@
-# Wahi (wahi)
+# Wahi
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,73 +64,114 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Wahi is a Toronto-headquartered Canadian digital real estate platform and licensed brokerage — Wahi Inc., trading as Wahi Realty Inc., Brokerage — founded in 2021 by Benjy Katchen. It runs a consumer home search, an instant home valuation estimate, market data products (Market Pulse, House Price Index), a Wahi Select REALTOR matching service and a cashback program across Ontario, British Columbia, Alberta, Nova Scotia, Saskatchewan and New Brunswick. Wahi sits in the challenger layer of the Canadian listings value chain and does not own the data it surfaces: Canadian residential listings run through CREA, the single national cooperative that operates REALTOR.ca and the Data Distribution Facility (DDF), and Wahi reaches that data as a member brokerage and through a commercial MLS connectivity vendor (Repliers) rather than by operating a feed of its own. Its real estate API posture is none-published. Probing on 2026-07-26 found no developer portal, no api./developer./developers./docs. subdomain (all fail DNS resolution), no OpenAPI or Swagger document, and no RESO Web API certification, RESO Data Dictionary certification, OData service or `$metadata` document anywhere on its hosts; Wahi does not appear in the RESO certificates directory nor on RESO's Canadian membership roster. The Terms of Use expressly forbid automated access, crawling and scraping, and forbid collecting, copying, storing or redistributing MLS data. The single publicly callable, self-describing API found on any Wahi host is the stock WordPress REST API of its marketing CMS — a content surface, not a real estate developer surface. Wahi is an API consumer, not an API producer.
+Wahi is a Toronto-headquartered Canadian digital real estate platform and licensed brokerage — Wahi Inc., trading as Wahi Realty Inc., Brokerage — founded in 2021 by Benjy Katchen. It runs a consumer home search, an instant home valuation estimate, market data products (Market Pulse, House Price Index), a Wahi Select REALTOR matching service and a cashback program across Ontario, British Columbia, Alberta, Nova Scotia, Saskatchewan and New Brunswick. Wahi sits in the challenger layer of the Canadian listings value chain and does not own the data it surfaces: Canadian residential listings run through CREA, the single national cooperative that operates REALTOR.ca and the Data Distribution Facility (DDF), and Wahi reaches that data as a member brokerage and through a commercial MLS connectivity vendor (Repliers) rather than by operating a feed of its own. Wahi runs no developer programme: there is no developer portal, no api./developer./developers./docs. subdomain (all fail DNS resolution), no API key or OAuth credential path, and no RESO Web API certification, RESO Data Dictionary certification, OData service or $metadata document anywhere on its hosts — Wahi appears in neither the RESO certificates directory nor RESO's Canadian membership roster. The Terms of Use expressly forbid automated access, crawling and scraping, and forbid collecting, copying, storing or redistributing MLS data. It does, however, publish two agent-facing artifacts that a portal-shaped search misses: a 421KB llms.txt at https://wahi.com/llms.txt (Last-Updated 2025-07-20) and an OpenAI-style AI plugin manifest at /.well-known/ai-plugin.json that points to a genuine OpenAPI 3.0.1 "Listing Search API" at https://wahi.com/gpt/openapi.yaml — one anonymous searchListings operation with 30 typed filters over Canadian listings. The spec is still served; the server it names, api.prod.wahi.com/gpt, returns 404, so the contract is published but unserved. A live Apollo GraphQL endpoint exists at api.prod.wahi.com/graphql with introspection disabled and robots.txt disallowing it, and the stock WordPress REST API of the marketing CMS remains anonymously callable. Wahi is overwhelmingly an API consumer rather than a producer, but not a zero.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/wahi/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/wahi/refs/heads/main/apis.yml)
+**Areas:** Real Estate · Canada · Property Listings · MLS · Valuation · AVM · PropTech · Rentals · Brokerage
 
-## Tags
+## Wahi on APIs.io
 
-- Real Estate
-- Canada
-- Property Listings
-- MLS
-- Valuation
-- AVM
-- PropTech
-- Rentals
-- Brokerage
+Everything profiled for Wahi is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/wahi/](https://apis.io/providers/wahi/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (2)
 
-- **Created:** 2026-07-26
-- **Modified:** 2026-07-26
+- [Wahi Website (WordPress REST)](https://apis.io/apis/wahi/wahi-com-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Wahi website at wahi.com: the route index of the site's content management system, catalogued as one site…
+- [Wahi Search API](https://apis.io/apis/wahi/wahi-search-api/) — The Search API from Wahi — 1 operation(s) for search.
 
-## APIs
+### Published properties
 
-### Wahi WordPress REST API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-The stock WordPress REST API served by Wahi's marketing and Learning Centre CMS at `https://wahi.com/wp-json/`. It is publicly reachable and self-describing: an anonymous GET on the root returns a 319KB JSON discovery document declaring 14 namespaces and 223 routes, and an anonymous GET on `/wp-json/wp/v2/posts` returns published Learning Centre content as JSON. This is CMS infrastructure that Wahi neither documents nor offers as a product — it carries no Wahi developer documentation, no key issuance, no terms of API use and no real estate listing, valuation or transaction capability. It is recorded here because it is the only genuinely public, machine-readable API surface confirmed on a Wahi host.
+#### MCP servers (1)
 
-- **Human URL:** [https://developer.wordpress.org/rest-api/](https://developer.wordpress.org/rest-api/)
-- **Base URL:** `https://wahi.com/wp-json`
+Model Context Protocol servers that expose the API to agents.
 
-#### Tags
+- [wahi-mcp.yml](https://apis.io/servers/wahi/wahi-mcp-yml/)
 
-- WordPress
-- Content
-- CMS
-- REST
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [OpenAPI](openapi/wahi-wp-json-discovery.json) — WordPress REST API discovery document, harvested verbatim 2026-07-26 (HTTP 200)
-- [Documentation](https://developer.wordpress.org/rest-api/)
+- [Wahi Agentic Access](https://apis.io/agentic-access/wahi/wahi-agentic-access/)
 
-## RESO Posture
+#### Collections (1)
 
-**No RESO reference found.** Wahi holds no RESO Web API certification and no RESO Data Dictionary certification at any version. It serves no OData service document, no `$metadata` CSDL document, and makes no reference to the RESO Universal Property Identifier (UPI). It does not appear in the RESO certificates directory ([reso.org/certificates](https://www.reso.org/certificates/), HTTP 200, 416,233 bytes, zero occurrences of "Wahi") nor on RESO's Canadian membership roster ([reso.org/canadian-membership](https://www.reso.org/canadian-membership/), HTTP 200, 19 organizations, Wahi absent). This is the expected Canadian answer: RESO certification is a US industry mandate imposed by NAR on Multiple Listing Services, and Wahi is a data consumer as a licensed member brokerage, not an MLS.
+Postman and Open Collection request collections.
 
-The instructive contrast sits upstream. CREA's REALTOR.ca DDF Web API is documented publicly at [ddfapi-docs.realtor.ca](https://ddfapi-docs.realtor.ca/) (HTTP 200), and its OData metadata document at `https://ddfapi.realtor.ca/odata/v1/$metadata` returns **HTTP 401**. The national contract is real, machine-readable and locked — and Wahi reaches it as a member brokerage and through a commercial vendor, never as something a developer can sign up for.
+- [API Collection](https://apis.io/collections/wahi/open-wahi-wp-json-discovery/)
 
-## Access Gate
+#### Overlays (1)
 
-**none-published.** There is no developer portal, no API program page, no partner page, no data-licensing page, no application form and no terms of API use. A developer cannot self-serve, cannot apply, and is not offered a partner path. What Wahi does publish is a prohibition: its [Terms of Use](https://wahi.com/ca/en/terms-of-use/) forbid automated means "including spiders, robots, crawlers, data mining tools" and forbid collecting, copying, storing, selling or redistributing MLS data. `robots.txt` additionally disallows `*/graphql` and `/ca/en/real-estate/graphql`, closing the one internal machine route the site has.
+OpenAPI overlays, including conversational phrasing for each operation.
 
-**Open data:** none. Canada has no counterpart to HM Land Registry Price Paid or Ordnance Survey open data; provincial land registration is largely privatised, with Teranet operating Ontario's registry under concession.
+- [Wahi Listing Search Overlay](https://apis.io/overlays/wahi/wahi-listing-search-overlay/)
 
-**Auth model:** no developer auth model is published. `/.well-known/openid-configuration` returns HTTP 403. The consumer site uses first-party session sign-in with Google One Tap. The only documented credential mechanism on any Wahi host is WordPress application passwords, issued through `wp-admin` to CMS users.
+#### Security (2)
 
-**Webhooks, events, SDKs, Postman:** none found. There is no Wahi GitHub organization.
+Authentication, trust centre, and vulnerability disclosure.
 
-## Common Properties
+- [Wahi Authentication](https://apis.io/security/wahi/wahi-authentication/)
+- [Wahi Domain Security](https://apis.io/security/wahi/wahi-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://wahi.com/ca/en)
-- [About](https://wahi.com/ca/en/about-us/)
-- [Terms of Service](https://wahi.com/ca/en/terms-of-use/)
-- [Privacy Policy](https://wahi.com/ca/en/privacy-policy/)
+- [Support](https://wahi.com/ca/en/contact-us/)
 - [Blog](https://wahi.com/ca/en/learning-centre/)
-- [Blog RSS](https://wahi.com/ca/en/feed/)
+- [Terms of service](https://wahi.com/ca/en/terms-of-use/)
+- [Privacy policy](https://wahi.com/ca/en/privacy-policy/)
+- [GitHub](https://github.com/wahi-com)
 
-## Maintainers
+## API Evangelist rating
 
-- Kin Lane — kin@apievangelist.com
+**Kin Score 35.1** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 64.3 |
+| Contract quality | 39.8 |
+| Contract governance | 4.5 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 30.4 |
+| Access clarity | 57.1 |
+
+**Agent readiness 27.7** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 23.1** — Securities & Market Data
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/wahi/](https://apis.io/providers/wahi/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Wahi: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/wahi/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
